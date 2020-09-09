@@ -22,8 +22,8 @@ const setting = {
 };
 
 const elementsSetting = {
-  lines: 6,
-  linesHeight: getHightElements(6) / 2
+  lines: 9,
+  linesHeight: getHightElements(9) / 2
 };
 
 function getQuantityElements(hightElement) {
@@ -46,7 +46,7 @@ function startGame() {
     line.style.top = line.y + 'px';
     gameArea.appendChild(line);
   }
-
+  //создаем препятствия
   for (let i = 1; i < getQuantityElements(100 * setting.traffic); i++) {
     const enemy = document.createElement('div');
     enemy.classList.add('enemy');
@@ -56,7 +56,6 @@ function startGame() {
     enemy.style.background = 'transparent url(./image/enemy.png) center / cover no-repeat';
     gameArea.appendChild(enemy);
   }
-
   setting.start = true;
   gameArea.appendChild(car);
   setting.x = car.offsetLeft;
@@ -101,17 +100,19 @@ function playGame() {
   }
 }
 
+//обновление разметки дороги
 function moveRoad() {
   let lines = document.querySelectorAll('.line');
   lines.forEach(function (line) {
     line.y += setting.speed;
     line.style.top = line.y + 'px';
     if (line.y >= document.documentElement.clientHeight) {
-      line.y = -elementsSetting.linesHeight*2;
+      line.y = -getHightElements(elementsSetting.lines);
     }
   });
 }
 
+//обновление препятсвий
 function moveEnemy() {
   let enemeis = document.querySelectorAll('.enemy');
   enemeis.forEach(function (enemy) {
@@ -126,6 +127,5 @@ function moveEnemy() {
 
 
 start.addEventListener('click', startGame);
-
 document.addEventListener('keydown', startRun);
 document.addEventListener('keyup', stopRun);
